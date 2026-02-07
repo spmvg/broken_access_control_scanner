@@ -68,7 +68,8 @@ def analyze_file(
     source_code = file_path.read_text(encoding="utf-8")
     source_code_base64 = base64.standard_b64encode(source_code.encode("utf-8")).decode("utf-8")
 
-    response = client.messages.create(
+    response_text = ""
+    with client.messages.stream(
         model=model,
         max_tokens=64000,
         system=SYSTEM_PROMPT,
@@ -92,9 +93,9 @@ def analyze_file(
                 ],
             }
         ],
-    )
-
-    response_text = response.content[0].text
+    ) as stream:
+        for text in stream.text_stream:
+            response_text += text
 
     json_match = re.search(r'\[.*]', response_text, re.DOTALL)
     findings = json.loads(json_match.group())
