@@ -1,7 +1,6 @@
 """
 Analyzer module that uses Anthropic AI to detect broken access control vulnerabilities.
 """
-import base64
 import json
 import re
 from pathlib import Path
@@ -66,7 +65,6 @@ def analyze_file(
         List of VulnerabilityResult with severity and description for each endpoint.
     """
     source_code = file_path.read_text(encoding="utf-8")
-    source_code_base64 = base64.standard_b64encode(source_code.encode("utf-8")).decode("utf-8")
 
     response_text = ""
     with client.messages.stream(
@@ -76,21 +74,7 @@ def analyze_file(
         messages=[
             {
                 "role": "user",
-                "content": [
-                    {
-                        "type": "document",
-                        "source": {
-                            "type": "base64",
-                            "media_type": "text/plain",
-                            "data": source_code_base64,
-                        },
-                        "title": file_path.name,
-                    },
-                    {
-                        "type": "text",
-                        "text": f"Analyze the attached source code file for broken access control vulnerabilities.\n\nData Model Context:\n{data_model}\n\nIdentify all endpoints/handlers and analyze each one. Respond with a JSON array of findings.",
-                    },
-                ],
+                "content": f"Analyze the following source code file for broken access control vulnerabilities.\n\nData Model Context:\n{data_model}\n\nSource Code ({file_path.name}):\n```\n{source_code}\n```\n\nIdentify all endpoints/handlers and analyze each one. Respond with a JSON array of findings.",
             }
         ],
     ) as stream:

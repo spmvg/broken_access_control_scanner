@@ -99,7 +99,7 @@ def main(
     console.print()
     severity_counts = {}
     for result in results:
-        severity_counts[result.severity] = severity_counts[result.severity] + 1
+        severity_counts[result.severity] = severity_counts.get(result.severity) + 1
 
     console.print("[bold]Summary:[/bold]")
     for severity in Severity:
