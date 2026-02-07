@@ -38,6 +38,11 @@ def main(
         "--data-model", "-d",
         help="Description of the data model and context for the endpoints.",
     ),
+    model: str = typer.Option(
+        "claude-sonnet-4-20250514",
+        "--model", "-m",
+        help="Anthropic model to use.",
+    ),
 ):
     """
     Scan source code for broken access control vulnerabilities using AI.
@@ -61,7 +66,7 @@ def main(
     # Analyze file
     console.print(f"[blue]Analyzing:[/blue] {source_file}")
     try:
-        results = analyze_file(client, source_file, data_model)
+        results = analyze_file(client, source_file, data_model, model)
     except Exception:
         console.print(f"[red]Error: AI failed to parse the response.[/red]")
         traceback.print_exc()

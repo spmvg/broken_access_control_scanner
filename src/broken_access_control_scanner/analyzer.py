@@ -50,7 +50,8 @@ Return one finding per endpoint/handler found in the code. If no endpoints are f
 def analyze_file(
     client: Anthropic,
     file_path: Path,
-    data_model: str
+    data_model: str,
+    model: str = "claude-sonnet-4-20250514"
 ) -> list[VulnerabilityResult]:
     """
     Analyze a source file for broken access control vulnerabilities using Anthropic AI.
@@ -59,6 +60,7 @@ def analyze_file(
         client: Anthropic API client.
         file_path: Path to the source file to analyze.
         data_model: Description of the data model/context.
+        model: Anthropic model to use.
 
     Returns:
         List of VulnerabilityResult with severity and description for each endpoint.
@@ -67,7 +69,7 @@ def analyze_file(
     source_code_base64 = base64.standard_b64encode(source_code.encode("utf-8")).decode("utf-8")
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model=model,
         system=SYSTEM_PROMPT,
         messages=[
             {
