@@ -70,6 +70,7 @@ def analyze_file(
 
     response = client.messages.create(
         model=model,
+        max_tokens=64000,
         system=SYSTEM_PROMPT,
         messages=[
             {
