@@ -1,5 +1,5 @@
-# `broken_access_control_scanner`
-`broken_access_control_scanner` is an AI command line tool to detect broken access control vulnerabilities in source code using Anthropic's Claude AI.
+# Broken Access Control Scanner
+Broken Access Control Scanner is an AI command line tool to detect broken access control vulnerabilities in source code using Anthropic's Claude AI.
 
 ## Installation
 Releases are made available on PyPi.
