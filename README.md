@@ -21,7 +21,7 @@ Requires `ANTHROPIC_API_KEY` environment variable to be set.
 
 - `source_file`: Path to a source code file containing endpoints
 - `--data-model`, `-d`: Description of the data model and context for the endpoints (required)
-- `--model`, `-m`: Anthropic model to use (default: `claude-sonnet-4-20250514`)
+- `--model`, `-m`: Anthropic model to use (default: `claude-sonnet-4-5`)
 
 ### Example
 
